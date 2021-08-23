@@ -34,12 +34,13 @@
 			-webkit-background-clip: text;
   			color: transparent;
 		}
-		td{
+		td, #navbardrop{
 			background-image: linear-gradient(to left, violet, green, yellow, orange, red);   
 			-webkit-background-clip: text;
   			color: transparent;
 		}
 	</style>
+	<script src="{% static 'js/main.js' %}"></script>
 </head>
 
 <body class="bg-light">
@@ -53,7 +54,7 @@
 	      	<!-- Dropdown -->
 		    <li class="nav-item dropdown">
 		      	<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-		        Search by University
+		        Search by University <span class="fas fa-caret-down"></span>
 		      	</a>
 		      	<div class="dropdown-menu">
 		        	<a id="search_by_university" class="dropdown-item" href="#">Search by University</a>
