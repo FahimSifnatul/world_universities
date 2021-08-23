@@ -49,6 +49,41 @@
 		<a class="navbar-brand" href="#">
 	  		<img class="rounded-circle" src="{% static 'images/logo.png' %}" alt="logo" width="50">
 		</a>
+		<ul class="navbar-nav ml-auto">
+	      	<!-- Dropdown -->
+		    <li class="nav-item dropdown">
+		      	<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+		        Search by University
+		      	</a>
+		      	<div class="dropdown-menu">
+		        	<a id="search_by_university" class="dropdown-item" href="#">Search by University</a>
+		        	<a id="search_by_country" class="dropdown-item" href="#">Search by Country</a>
+		      	</div>
+		    </li>
+		    <li class="nav-item">
+		    	
+		    	<!-- Search by University Form -->
+		    	<form id="search_by_university_form" class="form-inline" name="search_by_university_form"> {% csrf_token %}
+		    		<div class="input-group">
+		    			<input id="search_by_university_text" class="form-control" type="text" name="search_by_university_text" placeholder="Search by University" required>
+		    			<div class="input-group-append">
+		    				<input id="search_by_university_submit" class="btn btn-primary" type="submit" name="search_by_university_submit">
+		    			</div>
+		    		</div>	
+		    	</form>
+
+		    	<!-- Search by Country Form -->
+		    	<form id="search_by_country_form" class="form-inline" name="search_by_country_form" style="display: none;"> {% csrf_token %}
+		    		<div class="input-group">
+		    			<input id="search_by_country_text" class="form-control" type="text" name="search_by_country_text" placeholder="Search by Country" required>
+		    			<div class="input-group-append">
+		    				<input id="search_by_country_submit" class="btn btn-primary" type="submit" name="search_by_country_submit">
+		    			</div>
+		    		</div>	
+		    	</form>
+
+		    </li>
+	    </ul>
 	</nav>
 
 	<!-- Table to show country data -->
