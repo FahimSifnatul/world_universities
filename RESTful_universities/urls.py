@@ -21,11 +21,13 @@ from rest_framework import routers
 from universities_api.views import API, ListUniversities, SearchUniversities,\
                                     SearchByCountryUniversities,\
                                     CollectUniversities
+from home.views import Home
 
 router = routers.SimpleRouter()
 router.register(r'universities', API)
 
 urlpatterns = [
+    path('', Home.as_view(), name='home'),
     path('', include(router.urls)),
     path('collect', CollectUniversities.as_view(), name='collect-universities'),
     path('list', ListUniversities.as_view(), name='list-universities'),
