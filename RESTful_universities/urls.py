@@ -19,13 +19,15 @@ from rest_framework import routers
 
 # custom
 from universities_api.views import API, ListUniversities, SearchUniversities,\
-                                    SearchByCountryUniversities
+                                    SearchByCountryUniversities,\
+                                    CollectUniversities
 
 router = routers.SimpleRouter()
 router.register(r'universities', API)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('collect', CollectUniversities.as_view(), name='collect-universities'),
     path('list', ListUniversities.as_view(), name='list-universities'),
     path('search/<university>', SearchUniversities.as_view(), name='search-universities'),
     path('search-by-country/<country>', SearchByCountryUniversities.as_view(), name='search-by-country-universities'),
