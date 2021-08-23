@@ -18,13 +18,14 @@ from django.urls import path, include
 from rest_framework import routers  
 
 # custom
-from universities_api.views import API, ListUniversities 
+from universities_api.views import API, ListUniversities, SearchUniversities 
 
 router = routers.SimpleRouter()
 router.register(r'universities', API)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('list-universities', ListUniversities.as_view(), name='list-universities'),
+    path('list', ListUniversities.as_view(), name='list-universities'),
+    path('search/<university>', SearchUniversities.as_view(), name='search-universities'),
     path('admin/', admin.site.urls),
 ]
