@@ -36,4 +36,13 @@ class SearchUniversities(APIView):
 	def get(self, request, university, *args, **kwargs):
 		universities = Universities.objects.filter(name__istartswith=university)
 		universities_serializer = UniversitiesSerializer(instance=universities, many=True)
-		return Response(universities_serializer.data)		
+		return Response(universities_serializer.data)	
+
+
+class SearchByCountryUniversities(APIView):   
+	def get(self, request, country, *args, **kwargs):  
+		universities = Universities.objects.filter(country__istartswith=country)
+		universities_serializer = UniversitiesSerializer(instance=universities, many=True)
+		return Response(universities_serializer.data)
+
+
