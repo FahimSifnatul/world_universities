@@ -26,6 +26,20 @@
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<!-- Customs -->
+	<style>
+		h1{
+			background-image: linear-gradient(to left, lavender, blue, green, red);   
+			-webkit-background-clip: text;
+  			color: transparent;
+		}
+		td{
+			background-image: linear-gradient(to left, violet, green, yellow, orange, red);   
+			-webkit-background-clip: text;
+  			color: transparent;
+		}
+	</style>
 </head>
 
 <body class="bg-light">
@@ -33,12 +47,12 @@
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
 		<!-- Logo -->
 		<a class="navbar-brand" href="#">
-	  		<img src="{% static 'images/logo.png' %}" alt="logo" width="32">
+	  		<img class="rounded-circle" src="{% static 'images/logo.png' %}" alt="logo" width="50">
 		</a>
 	</nav>
 
 	<!-- Table to show country data -->
-	<h1 class="text-center">World Universities</h1>
+	<h1 class="text-center"><b>World Universities</b></h1>
 	<div id="table" class="container-fluid table-responsive-sm">
 		<table class="container rounded-lg table table-dark table-striped table-hover text-center w-100">
 			<thead>
@@ -52,7 +66,7 @@
 				{% for university in universities %}
 					<tr>
 						<td>{{university.name}}</td>
-						<td><a href="{{university.web_pages}}">{{university.web_pages}}</a></td>
+						<td><a href="{{university.web_pages}}" target="_blank">{{university.web_pages}}</a></td>
 						<td>{{university.country}}</td>
 					</tr>
 				{% endfor %}	

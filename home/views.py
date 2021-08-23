@@ -8,7 +8,7 @@ from universities_api.models import Universities
 # Create your views here.
 class Home(View):  
 	def get(self, request, *args, **kwargs):
-		universities = Universities.objects.all()
+		universities = Universities.objects.all().order_by('country')
 
 		if len(universities) == 0: 
 			url = 'http://universities.hipolabs.com/search'
@@ -21,6 +21,7 @@ class Home(View):
 											country = university['country'],
 											alpha_two_code = university['alpha_two_code']))
 			Universities.objects.bulk_create(values)
+			universities = Universities.objects.all().order_by('country')
 
 		context = {}
 		context = {'universities' : universities}
