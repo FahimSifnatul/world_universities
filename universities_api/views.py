@@ -28,21 +28,21 @@ class API(ModelViewSet):
 
 
 class CollectUniversities(APIView):  
-	def get(self, request, *args, **kwargs):  
+	def get(self, request, *args, **kwargs): 
+		universities = Universities.objects.all()
+		universities.delete()
+
 		url = 'http://universities.hipolabs.com/search'
 		universities_list = requests.get(url).json()
-		universities = Universities.objects.all()
 
-		if len(universities_list) != len(universities): 
-			universities.delete() 
-			values = []
-			for university in universities_list:  
-				values.append(Universities(name=university['name'],
-											domains = university['domains'][0],
-											web_pages = university['web_pages'][0],
-											country = university['country'],
-											alpha_two_code = university['alpha_two_code']))
-			Universities.objects.bulk_create(values)
+		values = []
+		for university in universities_list:  
+			values.append(Universities(name=university['name'],
+										domains = university['domains'][0],
+										web_pages = university['web_pages'][0],
+										country = university['country'],
+										alpha_two_code = university['alpha_two_code']))
+		Universities.objects.bulk_create(values)
 
 		universities = Universities.objects.all()
 		universities_serializer = UniversitiesSerializer(universities, many=True)
