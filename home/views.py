@@ -21,3 +21,27 @@ class Home(View):
 		context = {}
 		context = {'universities' : universities}
 		return render(request, 'home.html', context)
+
+
+	def post(self, request, *args, **kwargs):  
+		if 'search_by_university_text' in request.POST:  
+			university = request.POST['search_by_university_text']
+			if university == '':  
+				universities = Universities.objects.all().order_by('country')
+			else:
+				universities = Universities.objects.filter(
+								name__istartswith=university).order_by('country')
+			context = {}
+			context = {'universities' : universities}
+			return render(request, 'home.html', context)
+		
+		elif 'search_by_country_text' in request.POST:
+			country = request.POST['search_by_country_text']
+			if university == '':  
+				universities = Universities.objects.all().order_by('country')
+			else:
+				universities = Universities.objects.filter(
+								country__istartswith=country).order_by('country')  
+			context = {}
+			context = {'universities' : universities}
+			return render(request, 'home.html', context)

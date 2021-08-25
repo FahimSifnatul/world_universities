@@ -30,7 +30,7 @@
 	<!-- Customs -->
 	<style>
 		h1{
-			background-image: linear-gradient(to left, red, blue, red);   
+			background-image: linear-gradient(to left, lavender, blue, green, red);   
 			-webkit-background-clip: text;
   			color: transparent;
 		}
@@ -51,22 +51,44 @@
 	  		<img class="rounded-circle" src="{% static 'images/logo.png' %}" alt="logo" width="50">
 		</a>
 		<ul class="navbar-nav ml-auto">
+	      	<!-- Dropdown -->
+		    <li class="nav-item dropdown">
+		      	<a class="nav-link dropdown-toggle rainbow-text mr-sm-2" href="#" id="navbardrop" data-toggle="dropdown">Search by University</a>
+		      	<div class="dropdown-menu">
+		        	<a id="search_by_university" class="dropdown-item" href="#">Search by University</a>
+		        	<a id="search_by_country" class="dropdown-item" href="#">Search by Country</a>
+		      	</div>
+		    </li>
 		    <li class="nav-item">
-		    	<!-- Search by any -->
-	    		<div class="input-group">
-	    			<input id="search" class="form-control" type="text" name="search" placeholder="Search" required>
-	    			<div class="input-group-append">
-	    				<div class="input-group-text fas fa-search"></div>
-	    			</div>
-	    		</div>	
+		    	
+		    	<!-- Search by University Form -->
+		    	<form id="search_by_university_form" class="form-inline" method="POST" name="search_by_university_form"> {% csrf_token %}
+		    		<div class="input-group">
+		    			<input id="search_by_university_text" class="form-control" type="text" name="search_by_university_text" placeholder="Search by University">
+		    			<div class="input-group-append">
+		    				<button id="search_by_university_submit" class="btn btn-light fas fa-search" type="submit" name="search_by_university_submit"></button>
+		    			</div>
+		    		</div>	
+		    	</form>
+
+		    	<!-- Search by Country Form -->
+		    	<form id="search_by_country_form" class="form-inline" method="POST" name="search_by_country_form" style="display: none;"> {% csrf_token %}
+		    		<div class="input-group">
+		    			<input id="search_by_country_text" class="form-control" type="text" name="search_by_country_text" placeholder="Search by Country">
+		    			<div class="input-group-append">
+		    				<button id="search_by_country_submit" class="btn btn-light fas fa-search" type="submit" name="search_by_university_submit"></button>
+		    			</div>
+		    		</div>	
+		    	</form>
+
 		    </li>
 	    </ul>
 	</nav>
 
 	<!-- Table to show country data -->
 	<h1 class="text-center"><b>World Universities</b></h1>
-	<div class="container-fluid table-responsive-sm">
-		<table id="table" class="container rounded-lg table table-dark table-striped table-hover text-center w-100">
+	<div id="table" class="container-fluid table-responsive-sm">
+		<table class="container rounded-lg table table-dark table-striped table-hover text-center w-100">
 			<thead>
 				<tr>
 					<th class>Name</th>
