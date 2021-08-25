@@ -83,6 +83,12 @@
 			    	</form>
 
 			    </li>
+			    <!-- logout -->
+			    <li class="nav-item">
+  					<form method="POST"> {% csrf_token %}
+  						<button class="btn nav-link shadow-none" type="submit" name="logout"><span id="logout" class="fas fa-sign-out-alt">Logout</span></button>
+  					</form>
+  				</li>
 		    </ul>
 	    {% endif %}
 	</nav>

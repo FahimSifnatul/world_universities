@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -26,6 +26,7 @@ class Home(View):
 
 			context = {}
 			context['user_authenticated'] = 'True'
+			context['api_token'] = API_token.objects.get(username=request.user.username)
 			context['universities'] = universities
 			return render(request, 'home.html', context)
 
@@ -44,7 +45,9 @@ class Home(View):
 				universities = Universities.objects.filter(
 								name__istartswith=university).order_by('country')
 			context = {}
-			context = {'universities' : universities}
+			context['user_authenticated'] = 'True'
+			context['api_token'] = API_token.objects.get(username=request.user.username)
+			context['universities'] = Universities.objects.all()
 			return render(request, 'home.html', context)
 		
 
@@ -56,7 +59,9 @@ class Home(View):
 				universities = Universities.objects.filter(
 								country__istartswith=country).order_by('country')  
 			context = {}
-			context = {'universities' : universities}
+			context['user_authenticated'] = 'True'
+			context['api_token'] = API_token.objects.get(username=request.user.username)
+			context['universities'] = Universities.objects.all()
 			return render(request, 'home.html', context)
 
 
@@ -69,10 +74,11 @@ class Home(View):
 				login(request, user)
 				context = {}
 				context['user_authenticated'] = 'True'
+				context['api_token'] = API_token.objects.get(username=request.user.username)
 				context['universities'] = Universities.objects.all()
 			
 			else: # no user exists
-				context['user_authenticated'] = 'false'
+				context['user_authenticated'] = 'False'
 				messages.error(request, 'Hey ' + username + ', we appreciate your login try. But would you please check your username and password once more?')
 
 			return render(request, 'home.html', context)
@@ -116,14 +122,13 @@ class Home(View):
 											password=new_password)
 				if user is not None: # user exists - ready to login
 					login(request, user)
-					request.session['PASSWORD'] = new_password # For API data access purpose
 					
-					collect_api(request)
-					context['user_authenticated'] = 'true'
-					context['countries'] = Countries.objects.all()
-					messages.success(request, 'Congratulations ' + new_username + '!!! You are now a member of our Countries!!! family')
+					context['user_authenticated'] = 'True'
+					context['api_token'] = API_token.objects.get(username=request.user.username)
+					context['universities'] = Universities.objects.all()
+					messages.success(request, 'Congratulations ' + new_username + '!!! You are now a member of World Universities family')
 				else: # new user vanished from database 
-					context['user_authenticated'] = 'false'
+					context['user_authenticated'] = 'False'
 					messages.error(request, 'Hurry ' + new_username + '.... Your account has been deleted by someone from database...')
 			
 			return render(request, 'home.html', context)
