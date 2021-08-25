@@ -3,10 +3,12 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from secrets import token_hex
 import requests
 
 # custom models, serializers  
 from universities_api.models import Universities
+from .models import API_token
 
 API_URL = 'http://127.0.0.1:8000/'
 
@@ -58,7 +60,7 @@ class Home(View):
 			return render(request, 'home.html', context)
 
 
-		elif 'username' in request.POST:  
+		elif 'username' in request.POST:  # sign in
 			username = request.POST['username']
 			password = request.POST['password']
 
@@ -76,7 +78,7 @@ class Home(View):
 			return render(request, 'home.html', context)
 
 
-		elif 'new_username' in request.POST: # sign up checking
+		elif 'new_username' in request.POST: # sign up
 			new_username = request.POST['new_username']
 			new_email    = request.POST['new_email']
 			new_password = request.POST['new_password']
@@ -104,6 +106,12 @@ class Home(View):
 													email=new_email,
 													password=new_password)
 				new_user.save()
+
+				# To assign API token to new user
+				new_user_token = API_token(username=new_username,
+											token=token_hex(16))
+				new_user_token.save() 
+
 				user = authenticate(request,username=new_username,
 											password=new_password)
 				if user is not None: # user exists - ready to login
