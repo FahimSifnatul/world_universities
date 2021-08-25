@@ -50,63 +50,141 @@
 		<a class="navbar-brand" href="#">
 	  		<img class="rounded-circle" src="{% static 'images/logo.png' %}" alt="logo" width="50">
 		</a>
-		<ul class="navbar-nav ml-auto">
-	      	<!-- Dropdown -->
-		    <li class="nav-item dropdown">
-		      	<a class="nav-link dropdown-toggle rainbow-text mr-sm-2" href="#" id="navbardrop" data-toggle="dropdown">Search by University</a>
-		      	<div class="dropdown-menu">
-		        	<a id="search_by_university" class="dropdown-item" href="#">Search by University</a>
-		        	<a id="search_by_country" class="dropdown-item" href="#">Search by Country</a>
-		      	</div>
-		    </li>
-		    <li class="nav-item">
-		    	
-		    	<!-- Search by University Form -->
-		    	<form id="search_by_university_form" class="form-inline" method="POST" name="search_by_university_form"> {% csrf_token %}
-		    		<div class="input-group">
-		    			<input id="search_by_university_text" class="form-control" type="text" name="search_by_university_text" placeholder="Search by University">
-		    			<div class="input-group-append">
-		    				<button id="search_by_university_submit" class="btn btn-light fas fa-search" type="submit" name="search_by_university_submit"></button>
-		    			</div>
-		    		</div>	
-		    	</form>
+		{% if user_authenticated == 'True' %}
+			<ul class="navbar-nav ml-auto">
+		      	<!-- Dropdown -->
+			    <li class="nav-item dropdown">
+			      	<a class="nav-link dropdown-toggle rainbow-text mr-sm-2" href="#" id="navbardrop" data-toggle="dropdown">Search by University</a>
+			      	<div class="dropdown-menu">
+			        	<a id="search_by_university" class="dropdown-item" href="#">Search by University</a>
+			        	<a id="search_by_country" class="dropdown-item" href="#">Search by Country</a>
+			      	</div>
+			    </li>
+			    <li class="nav-item">
+			    	
+			    	<!-- Search by University Form -->
+			    	<form id="search_by_university_form" class="form-inline" method="POST" name="search_by_university_form"> {% csrf_token %}
+			    		<div class="input-group">
+			    			<input id="search_by_university_text" class="form-control" type="text" name="search_by_university_text" placeholder="Search by University">
+			    			<div class="input-group-append">
+			    				<button id="search_by_university_submit" class="btn btn-light fas fa-search" type="submit" name="search_by_university_submit"></button>
+			    			</div>
+			    		</div>	
+			    	</form>
 
-		    	<!-- Search by Country Form -->
-		    	<form id="search_by_country_form" class="form-inline" method="POST" name="search_by_country_form" style="display: none;"> {% csrf_token %}
-		    		<div class="input-group">
-		    			<input id="search_by_country_text" class="form-control" type="text" name="search_by_country_text" placeholder="Search by Country">
-		    			<div class="input-group-append">
-		    				<button id="search_by_country_submit" class="btn btn-light fas fa-search" type="submit" name="search_by_university_submit"></button>
-		    			</div>
-		    		</div>	
-		    	</form>
+			    	<!-- Search by Country Form -->
+			    	<form id="search_by_country_form" class="form-inline" method="POST" name="search_by_country_form" style="display: none;"> {% csrf_token %}
+			    		<div class="input-group">
+			    			<input id="search_by_country_text" class="form-control" type="text" name="search_by_country_text" placeholder="Search by Country">
+			    			<div class="input-group-append">
+			    				<button id="search_by_country_submit" class="btn btn-light fas fa-search" type="submit" name="search_by_university_submit"></button>
+			    			</div>
+			    		</div>	
+			    	</form>
 
-		    </li>
-	    </ul>
+			    </li>
+		    </ul>
+	    {% endif %}
 	</nav>
 
 	<!-- Table to show country data -->
-	<h1 class="text-center"><b>World Universities</b></h1>
-	<div id="table" class="container-fluid table-responsive-sm">
-		<table class="container rounded-lg table table-dark table-striped table-hover text-center w-100">
-			<thead>
-				<tr>
-					<th class>Name</th>
-					<th>WebPage</th>
-					<th>Country</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for university in universities %}
+	{% if user_authenticated == 'True' %}
+		<h1 class="text-center"><b>World Universities</b></h1>
+		<div id="table" class="container-fluid table-responsive-sm">
+			<table class="container rounded-lg table table-dark table-striped table-hover text-center w-100">
+				<thead>
 					<tr>
-						<td class="rainbow-text">{{university.name}}</td>
-						<td><a href="{{university.web_pages}}" target="_blank">{{university.web_pages}}</a></td>
-						<td class="rainbow-text">{{university.country}}</td>
+						<th class>Name</th>
+						<th>WebPage</th>
+						<th>Country</th>
 					</tr>
-				{% endfor %}	
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+					{% for university in universities %}
+						<tr>
+							<td class="rainbow-text">{{university.name}}</td>
+							<td><a href="{{university.web_pages}}" target="_blank">{{university.web_pages}}</a></td>
+							<td class="rainbow-text">{{university.country}}</td>
+						</tr>
+					{% endfor %}	
+				</tbody>
+			</table>
+		</div>
+	{% elif user_authenticated == 'False' %}
+		<div class="card mx-auto w-50 bg-dark" style="top: 10vh;">
+			<div class="card-header border-0">
+				<!-- Sign In / Sign Up navs -->
+				<ul class="nav nav-tabs">
+ 					<li class="nav-item">
+    					<a class="nav-link active" data-toggle="tab" href="#sign_in">Sign In</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link" data-toggle="tab" href="#sign_up">Sign Up</a>
+  					</li>
+				</ul>
+			</div>
+
+			<!-- Sign In Form -->
+			<div class="card-body tab-content">
+				<div id="sign_in" class="container tab-pane active">
+					<form id="sign_in_form" method="POST" name="sign_in_form"> {% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Username</div>
+								</div>
+								<input class="form-control" type="text" name="username" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Password</div>
+								</div>
+								<input class="form-control" type="password" name="password" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<input class="btn btn-primary float-right" type="submit" name="sign_in_submit">
+						</div>
+					</form>
+				</div>
+
+				<!-- Sign Up Form -->
+				<div id="sign_up" class="container tab-pane fade">
+					<form method="POST" name="sign_up_form"> {% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Username</div>
+								</div>
+								<input class="form-control" type="text" name="new_username" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">E-mail</div>
+								</div>
+								<input class="form-control" type="email" name="new_email" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Password</div>
+								</div>
+								<input class="form-control" type="password" name="new_password" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<input class="btn btn-primary float-right" type="submit" name="sign_up_submit">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 </body>
 
 {% if messages %}
