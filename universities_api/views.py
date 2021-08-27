@@ -6,6 +6,7 @@ import requests
 
 # custom models, serializers
 from .models import Universities
+from home.models import API_token
 from .serializers import UniversitiesSerializer
 
 
@@ -28,7 +29,14 @@ class API(ModelViewSet):
 
 
 class CollectUniversities(APIView):  
-	def get(self, request, *args, **kwargs): 
+	def get(self, request, api_token, *args, **kwargs): 
+		try:
+			check = API_token.objects.get(token=api_token)
+		except:  # api_token error 
+			context = {}
+			context['error'] = 'api_token not found'
+			return Response(context)
+
 		universities = Universities.objects.all()
 		universities.delete()
 
@@ -52,7 +60,14 @@ class CollectUniversities(APIView):
 
 
 class ListUniversities(APIView):   
-	def get(self, request, *args, **kwargs):  
+	def get(self, request, api_token, *args, **kwargs):  
+		try:
+			check = API_token.objects.get(token=api_token)
+		except:  # api_token error 
+			context = {}
+			context['error'] = 'api_token not found'
+			return Response(context)
+
 		universities = Universities.objects.all()
 		universities_serializer = UniversitiesSerializer(instance=universities, many=True)
 		return Response(universities_serializer.data) 
@@ -60,7 +75,14 @@ class ListUniversities(APIView):
 
 
 class SearchUniversities(APIView):  
-	def get(self, request, university, *args, **kwargs):
+	def get(self, request, api_token, university, *args, **kwargs):
+		try:
+			check = API_token.objects.get(token=api_token)
+		except:  # api_token error 
+			context = {}
+			context['error'] = 'api_token not found'
+			return Response(context)
+
 		universities = Universities.objects.filter(name__istartswith=university)
 		universities_serializer = UniversitiesSerializer(instance=universities, many=True)
 		return Response(universities_serializer.data)	
@@ -68,7 +90,14 @@ class SearchUniversities(APIView):
 
 
 class SearchByCountryUniversities(APIView):   
-	def get(self, request, country, *args, **kwargs):  
+	def get(self, request, api_token, country, *args, **kwargs):  
+		try:
+			check = API_token.objects.get(token=api_token)
+		except:  # api_token error 
+			context = {}
+			context['error'] = 'api_token not found'
+			return Response(context)
+
 		universities = Universities.objects.filter(country__istartswith=country)
 		universities_serializer = UniversitiesSerializer(instance=universities, many=True)
 		return Response(universities_serializer.data)

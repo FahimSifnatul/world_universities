@@ -51,6 +51,16 @@
 	  		<img class="rounded-circle" src="{% static 'images/logo.png' %}" alt="logo" width="50">
 		</a>
 		{% if user_authenticated == 'True' %}
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<div class="input-group-text">API token</div>
+						</div>
+						<input class="form-control bg-light" type="text" value="{{api_token}}" readonly>
+					</div>	
+				</li>
+			</ul>
 			<ul class="navbar-nav ml-auto">
 		      	<!-- Dropdown -->
 			    <li class="nav-item dropdown">

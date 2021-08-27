@@ -26,7 +26,7 @@ class Home(View):
 
 			context = {}
 			context['user_authenticated'] = 'True'
-			context['api_token'] = API_token.objects.get(username=request.user.username)
+			context['api_token'] = API_token.objects.get(username=request.user.username).token
 			context['universities'] = universities
 			return render(request, 'home.html', context)
 
@@ -39,6 +39,7 @@ class Home(View):
 	def post(self, request, *args, **kwargs):  
 		if 'search_by_university_text' in request.POST:  
 			university = request.POST['search_by_university_text']
+			universities = None
 			if university == '':  
 				universities = Universities.objects.all().order_by('country')
 			else:
@@ -46,13 +47,14 @@ class Home(View):
 								name__istartswith=university).order_by('country')
 			context = {}
 			context['user_authenticated'] = 'True'
-			context['api_token'] = API_token.objects.get(username=request.user.username)
-			context['universities'] = Universities.objects.all()
+			context['api_token'] = API_token.objects.get(username=request.user.username).token
+			context['universities'] = universities
 			return render(request, 'home.html', context)
 		
 
 		elif 'search_by_country_text' in request.POST:
 			country = request.POST['search_by_country_text']
+			universities = None
 			if university == '':  
 				universities = Universities.objects.all().order_by('country')
 			else:
@@ -60,8 +62,8 @@ class Home(View):
 								country__istartswith=country).order_by('country')  
 			context = {}
 			context['user_authenticated'] = 'True'
-			context['api_token'] = API_token.objects.get(username=request.user.username)
-			context['universities'] = Universities.objects.all()
+			context['api_token'] = API_token.objects.get(username=request.user.username).token
+			context['universities'] = universities
 			return render(request, 'home.html', context)
 
 
@@ -74,8 +76,8 @@ class Home(View):
 				login(request, user)
 				context = {}
 				context['user_authenticated'] = 'True'
-				context['api_token'] = API_token.objects.get(username=request.user.username)
-				context['universities'] = Universities.objects.all()
+				context['api_token'] = API_token.objects.get(username=request.user.username).token
+				context['universities'] = Universities.objects.all().order_by('country')
 			
 			else: # no user exists
 				context['user_authenticated'] = 'False'
@@ -124,8 +126,8 @@ class Home(View):
 					login(request, user)
 					
 					context['user_authenticated'] = 'True'
-					context['api_token'] = API_token.objects.get(username=request.user.username)
-					context['universities'] = Universities.objects.all()
+					context['api_token'] = API_token.objects.get(username=request.user.username).token
+					context['universities'] = Universities.objects.all().order_by('country')
 					messages.success(request, 'Congratulations ' + new_username + '!!! You are now a member of World Universities family')
 				else: # new user vanished from database 
 					context['user_authenticated'] = 'False'

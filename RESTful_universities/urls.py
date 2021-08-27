@@ -29,9 +29,9 @@ router.register(r'universities', API)
 urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('', include(router.urls)),
-    path('collect', CollectUniversities.as_view(), name='collect-universities'),
-    path('list', ListUniversities.as_view(), name='list-universities'),
-    path('search/<university>', SearchUniversities.as_view(), name='search-universities'),
-    path('search-by-country/<country>', SearchByCountryUniversities.as_view(), name='search-by-country-universities'),
+    path('<api_token>/collect', CollectUniversities.as_view(), name='collect-universities'),
+    path('<api_token>/list', ListUniversities.as_view(), name='list-universities'),
+    path('<api_token>/search/<university>', SearchUniversities.as_view(), name='search-universities'),
+    path('<api_token>/search-by-country/<country>', SearchByCountryUniversities.as_view(), name='search-by-country-universities'),
     path('admin/', admin.site.urls),
 ]
