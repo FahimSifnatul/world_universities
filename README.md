@@ -160,5 +160,5 @@ python manage.py runserver 127.0.0.1:8000
 
 <h2>License</h2>
 <p align="justify">
-	Countries!!! web app can be copied, modified, distributed for both personal and commercial purposes under <a href="https://opensource.org/licenses/MIT">MIT License</a>
+	World Universities web app can be copied, modified, distributed for both personal and commercial purposes under <a href="https://opensource.org/licenses/MIT">MIT License</a>
 </p>
