@@ -8,7 +8,7 @@
 <!-- Short description about World Universities -->
 <h1>World Universities</h1>
 <p align="justify">
-	A simple, elegent and powerful web app to display different university related data. Besides, it includes a bunch of useful REST APIs to retrieve university data. Token based APIs are included.<a href="https://strativ-assignment.herokuapp.com"><img src="https://github.com/FahimSifnatul/strativ/blob/master/static/images/logo.png" width="12" height="12">Live Demo</a>
+	A simple, elegent and powerful web app to display different university related data. Besides, it includes a bunch of useful REST APIs to retrieve university data. Token based APIs are included. <a href="https://world-univesities.herokuapp.com"> <img src="https://github.com/FahimSifnatul/world_universities/blob/master/static/images/logo.png" width="12" height="12">Live Demo</a>
 </p>	
 
 
